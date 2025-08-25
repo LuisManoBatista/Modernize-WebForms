@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.AspNet.Identity;
 
 namespace WebFormsApp
 {
@@ -45,10 +42,10 @@ namespace WebFormsApp
                 Response.Cookies.Set(responseCookie);
             }
 
-            Page.PreLoad += master_Page_PreLoad;
+            Page.PreLoad += OnMasterPagePreLoad;
         }
 
-        protected void master_Page_PreLoad(object sender, EventArgs e)
+        protected void OnMasterPagePreLoad(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {

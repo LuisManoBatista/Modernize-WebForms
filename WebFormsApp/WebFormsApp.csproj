@@ -412,6 +412,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\SystemWebAdapterConfig.cs" />
     <Compile Include="SessionPage.aspx.cs">
       <DependentUpon>SessionPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
