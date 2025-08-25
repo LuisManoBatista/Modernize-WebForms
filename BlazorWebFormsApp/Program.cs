@@ -28,4 +28,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 app.MapForwarder("/{**catch-all}", app.Configuration["ProxyTo"]!).Add(static builder => ((RouteEndpointBuilder)builder).Order = int.MaxValue);
 
-app.Run();
+await app.RunAsync();
