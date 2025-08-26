@@ -5,6 +5,10 @@ namespace WebFormsApp
 {
     public static class SystemWebAdapterConfig 
     {
+        public const string RemoteAppApiKey = "RemoteAppApiKey";
+        
+        public const string SessionValue = "session-value";
+
         public static void Register(this HttpApplication application)
         {
             SystemWebAdapterConfiguration.AddSystemWebAdapters(application)
@@ -12,11 +16,11 @@ namespace WebFormsApp
                .AddProxySupport(options => options.UseForwardedHeaders = true)
                .AddJsonSessionSerializer(options =>
                {
-                   options.RegisterKey<string>("test-value");
+                     options.RegisterKey<string>(SessionValue);
                })
                .AddRemoteAppServer(options =>
                {
-                   options.ApiKey = ConfigurationManager.AppSettings["RemoteAppApiKey"];
+                   options.ApiKey = ConfigurationManager.AppSettings[RemoteAppApiKey];
                })
                .AddSessionServer();
         }

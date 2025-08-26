@@ -9,13 +9,13 @@ namespace WebFormsApp
         {
             if (!IsPostBack)
             {
-                SessionTextBox.Text = Session["test-value"]?.ToString() ?? string.Empty;
+                SessionTextBox.Text = Session[SystemWebAdapterConfig.SessionValue]?.ToString() ?? string.Empty;
             }
         }
 
         protected void OnSubmitSessionButtonClick(object sender, EventArgs e)
         {
-            Session["test-value"] = SessionTextBox.Text;
+            Session[SystemWebAdapterConfig.SessionValue] = SessionTextBox.Text;
         }
     }
 }

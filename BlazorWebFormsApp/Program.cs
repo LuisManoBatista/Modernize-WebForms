@@ -1,8 +1,23 @@
+using BlazorWebFormsApp;
 using BlazorWebFormsApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSystemWebAdapters();
 builder.Services.AddHttpForwarder();
+
+builder.Services.AddRouting(options => options.ConstraintMap.Add("isAxdFile", typeof(AxdConstraint)));
+
+builder.Services.AddSystemWebAdapters()
+    .AddJsonSessionSerializer(options =>
+    {
+        options.RegisterKey<string>(SystemWebAdapterConfig.SessionValue);
+    })
+    .AddRemoteAppClient(options =>
+    {
+        options.RemoteAppUrl = new(builder.Configuration[SystemWebAdapterConfig.ProxyTo]!);
+        options.ApiKey = builder.Configuration[SystemWebAdapterConfig.RemoteAppApiKey]!;
+    })
+    .AddSessionClient();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -19,13 +34,28 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
+app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+
+/*
+ * When Blazor interactive SSR establishes a SignalR connection, a CONNECT method is requested.
+ * This request will stay open until Blazor sends a disconnect request. 
+ * Since it stays open, the session is not properly committed and will stay in the heartbeat loop on the framework side of System.WebAdapters.
+ * We can either:
+ *     A: Block all connect requests from using System.Web.Adapters
+ *     B: Block all requests from paths containing "/_blazor"
+ * TLDR: We need to ensure that SystemWeb.Adapters is not used with Blazor SignalR
+ */
+app.UseWhen(
+    (context) => !HttpMethods.IsConnect(context.Request.Method),
+    appBuilder => appBuilder.UseSystemWebAdapters());
+
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-app.MapForwarder("/{**catch-all}", app.Configuration["ProxyTo"]!).Add(static builder => ((RouteEndpointBuilder)builder).Order = int.MaxValue);
+    .AddInteractiveServerRenderMode()
+    .RequireSystemWebAdapterSession();
+
+app.MapForwarder("/{**catch-all}", app.Configuration[SystemWebAdapterConfig.ProxyTo]!).Add(static builder => ((RouteEndpointBuilder)builder).Order = int.MaxValue);
 
 await app.RunAsync();
