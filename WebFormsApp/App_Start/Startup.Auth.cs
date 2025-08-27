@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
-using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Interop;
 using Owin;
+using System;
+using System.IO;
 using WebFormsApp.Models;
 
 namespace WebFormsApp
@@ -21,6 +21,18 @@ namespace WebFormsApp
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
+            // These must match the data protection settings in MvcCoreApp Program.cs for cookie sharing to work
+            var sharedApplicationName = "BlazorMigrationApp";
+            var sharedDataProtectionProvider = DataProtectionProvider.Create(
+                // This directory is used to share dataprotection keys between MvcApp and MvcCoreApp
+                new DirectoryInfo(Path.Combine(Path.GetTempPath(), "sharedkeys", sharedApplicationName)),
+                    builder => builder.SetApplicationName(sharedApplicationName))
+                    .CreateProtector(
+                        "Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationMiddleware",
+                        // Must match the Scheme name on the MvcCoreApp, i.e. IdentityConstants.ApplicationScheme
+                        "BlazorMigrationCookie",
+                        "v2");
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -33,8 +45,23 @@ namespace WebFormsApp
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
+                // Settings to configure shared cookie with MvcCoreApp
+                CookieName = ".AspNet.ApplicationCookie",
+                TicketDataFormat = new AspNetTicketDataFormat(new DataProtectorShim(sharedDataProtectionProvider))
             });
+
+            app.Map("/owin-info", appBuilder =>
+            {
+                appBuilder.Run(owinContext =>
+                {
+                    var host = owinContext.Request.Host;
+                    var port = owinContext.Request.LocalPort;
+
+                    return owinContext.Response.WriteAsync($"host: '{host}'; Port: '{port}'");
+                });
+            });
+
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
