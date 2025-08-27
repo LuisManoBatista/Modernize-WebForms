@@ -1,5 +1,7 @@
 using BlazorWebFormsApp;
 using BlazorWebFormsApp.Components;
+using BlazorWebFormsApp.Components.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpForwarder();
@@ -21,7 +23,7 @@ builder.Services.AddSystemWebAdapters()
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents(options => options.RootComponents.RegisterCustomElement<HelloWorld>("hello-world"));
 
 var app = builder.Build();
 
