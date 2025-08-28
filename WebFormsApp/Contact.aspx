@@ -24,3 +24,7 @@
         </div>
     </main>
 </asp:Content>
+
+<asp:Content ID="ScriptsContent" ContentPlaceHolderID="ScriptsPlaceHolder" runat="server">
+    <script src="_framework/blazor.server.js"></script>
+</asp:Content>

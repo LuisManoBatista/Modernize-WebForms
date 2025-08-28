@@ -82,7 +82,8 @@
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
-        <script src="_framework/blazor.server.js"></script>
+        <asp:ContentPlaceHolder ID="ScriptsPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
     </asp:PlaceHolder>
 </body>
 </html>
