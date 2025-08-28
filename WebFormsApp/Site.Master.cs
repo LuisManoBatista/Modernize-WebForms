@@ -71,7 +71,8 @@ namespace WebFormsApp
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            //Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Context.GetOwinContext().Authentication.SignOut("Identity.Application");
         }
     }
 

@@ -2,9 +2,19 @@ using BlazorWebFormsApp;
 using BlazorWebFormsApp.Components;
 using BlazorWebFormsApp.Components.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.SystemWebAdapters;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpForwarder();
+
+var sharedApplicationName = "SharedCookieWebFormApp";
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Path.GetTempPath(), "sharedkeys", sharedApplicationName)))
+    .SetApplicationName(sharedApplicationName);
+
+builder.Services.AddAuthentication()
+    .AddCookie("Identity.Application", options => options.Cookie.Name = ".AspNet.ApplicationCookie");
 
 builder.Services.AddRouting(options => options.ConstraintMap.Add("isAxdFile", typeof(AxdConstraint)));
 
@@ -37,6 +47,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
@@ -53,6 +64,13 @@ app.MapStaticAssets();
 app.UseWhen(
     (context) => !HttpMethods.IsConnect(context.Request.Method),
     appBuilder => appBuilder.UseSystemWebAdapters());
+
+app.MapGet("/current-principals-no-metadata", (HttpContext ctx) =>
+{
+    var context = ctx.AsSystemWeb();
+    var user1 = context.User;
+    return "done";
+});
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
