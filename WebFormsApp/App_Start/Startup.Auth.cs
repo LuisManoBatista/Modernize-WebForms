@@ -7,7 +7,9 @@ using Microsoft.Owin.Security.Interop;
 using Owin;
 using System;
 using System.IO;
-using WebFormsApp.Models;
+using WebFormsApp.Identity.Infrastructure;
+using WebFormsApp.Identity.Infrastructure.Models;
+using WebFormsApp.Identity.Managers;
 
 namespace WebFormsApp
 {

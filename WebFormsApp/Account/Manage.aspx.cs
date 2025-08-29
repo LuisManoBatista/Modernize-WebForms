@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Owin;
-using WebFormsApp.Models;
+using System;
+using System.Web;
+using WebFormsApp.Identity.Managers;
 
 namespace WebFormsApp.Account
 {
@@ -35,7 +29,7 @@ namespace WebFormsApp.Account
 
         protected void Page_Load()
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var manager = Context.GetUserManager();
 
             HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
 
@@ -46,7 +40,7 @@ namespace WebFormsApp.Account
 
             LoginsCount = manager.GetLogins(User.Identity.GetUserId()).Count;
 
-            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            var authenticationManager = Context.GetAuthenticationManager();
 
             if (!IsPostBack)
             {
@@ -92,8 +86,8 @@ namespace WebFormsApp.Account
         // Remove phonenumber from user
         protected void RemovePhone_Click(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+            var manager = Context.GetUserManager();
+            var signInManager = Context.GetSignInManager();
             var result = manager.SetPhoneNumber(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
@@ -110,7 +104,7 @@ namespace WebFormsApp.Account
         // DisableTwoFactorAuthentication
         protected void TwoFactorDisable_Click(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var manager = Context.GetUserManager();
             manager.SetTwoFactorEnabled(User.Identity.GetUserId(), false);
 
             Response.Redirect("/Account/Manage");
@@ -119,7 +113,7 @@ namespace WebFormsApp.Account
         //EnableTwoFactorAuthentication 
         protected void TwoFactorEnable_Click(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var manager = Context.GetUserManager();
             manager.SetTwoFactorEnabled(User.Identity.GetUserId(), true);
 
             Response.Redirect("/Account/Manage");

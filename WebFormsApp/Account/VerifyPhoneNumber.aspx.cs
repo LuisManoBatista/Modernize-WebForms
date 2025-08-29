@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using WebFormsApp.Identity.Managers;
 
 namespace WebFormsApp.Account
 {
@@ -13,7 +14,7 @@ namespace WebFormsApp.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var manager = Context.GetUserManager();
             var phonenumber = Request.QueryString["PhoneNumber"];
             var code = manager.GenerateChangePhoneNumberToken(User.Identity.GetUserId(), phonenumber);           
             PhoneNumber.Value = phonenumber;
@@ -27,8 +28,8 @@ namespace WebFormsApp.Account
                 return;
             }
 
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+            var manager = Context.GetUserManager();
+            var signInManager = Context.GetSignInManager();
 
             var result = manager.ChangePhoneNumber(User.Identity.GetUserId(), PhoneNumber.Value, Code.Text);
 

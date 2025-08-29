@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using WebFormsApp.Models;
+using WebFormsApp.Identity.Managers;
 
 namespace WebFormsApp.Account
 {
@@ -19,10 +18,10 @@ namespace WebFormsApp.Account
 
         protected void Reset_Click(object sender, EventArgs e)
         {
-            string code = IdentityHelper.GetCodeFromRequest(Request);
+            string code = IdentityExtentions.GetCodeFromRequest(Request);
             if (code != null)
             {
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var manager = Context.GetUserManager();
 
                 var user = manager.FindByName(Email.Text);
                 if (user == null)

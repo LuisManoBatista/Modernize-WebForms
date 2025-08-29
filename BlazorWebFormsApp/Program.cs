@@ -72,13 +72,6 @@ app.UseWhen(
     (context) => !HttpMethods.IsConnect(context.Request.Method),
     appBuilder => appBuilder.UseSystemWebAdapters());
 
-app.MapGet("/current-principals-no-metadata", (HttpContext ctx) =>
-{
-    var context = ctx.AsSystemWeb();
-    var user1 = context.User;
-    return "done";
-});
-
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .RequireSystemWebAdapterSession();

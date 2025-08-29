@@ -7,7 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using WebFormsApp.Models;
+using WebFormsApp.Identity.Infrastructure.Models;
+using WebFormsApp.Identity.Managers;
 
 namespace WebFormsApp.Account
 {
@@ -18,8 +19,8 @@ namespace WebFormsApp.Account
 
         public TwoFactorAuthenticationSignIn()
         {
-            manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+            manager = Context.GetUserManager();
+            signinManager = Context.GetSignInManager();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -43,7 +44,7 @@ namespace WebFormsApp.Account
             switch (result)
             {
                 case SignInStatus.Success:
-                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    IdentityExtentions.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                     break;
                 case SignInStatus.LockedOut:
                     Response.Redirect("/Account/Lockout");
