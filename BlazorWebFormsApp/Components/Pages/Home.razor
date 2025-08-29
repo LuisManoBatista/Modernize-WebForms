@@ -3,50 +3,44 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<main>
+    
+    <section class="row" aria-labelledby="aspnetTitle">
 
-<div class="container-fluid">
-    <EditForm Model="SessionData" OnSubmit="OnSubmit" class="col-md-4" FormName="Session">
-        <div class="mb-2">
-            <label for="session-message" class="form-label">Session Message:</label>
-            <InputText id="session-message" class="form-control" @bind-Value="SessionData.SessionMessage" />
-        </div>
-        <div class="mb-2">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </EditForm>
-</div>
+        <h1 id="aspnetTitle" tabindex="-1">Blazor</h1>
 
-@code {
-    [SupplyParameterFromForm]
-    private SessionData SessionData { get; set; } = new();
+        <p class="lead">Blazor is a free web framework for building interactive web applications using C# instead of JavaScript.</p>
+        <p><a href="http://blazor.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+    </section>
 
-    [CascadingParameter]
-    public HttpContext? HttpContext { get; set; }
-
-    protected override Task OnInitializedAsync()
-    {
-        if (HttpContext != null)
-        {
-            var webHttpContext = ((System.Web.HttpContext)HttpContext);
-            if (webHttpContext != null && webHttpContext.Session != null && string.IsNullOrEmpty(SessionData.SessionMessage))
-            {
-                SessionData.SessionMessage = webHttpContext.Session[SystemWebAdapterConfig.SessionValue]?.ToString() ?? string.Empty;
-            }
-        }
-
-        return base.OnInitializedAsync();
-    }
-
-    private void OnSubmit()
-    {
-        if (HttpContext != null)
-        {
-            var webHttpContext = ((System.Web.HttpContext)HttpContext);
-            if (webHttpContext != null && webHttpContext.Session != null)
-            {
-                webHttpContext.Session[SystemWebAdapterConfig.SessionValue] = SessionData.SessionMessage;
-            }
-        }
-    }
-}
+    <div class="row">
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <h2 id="gettingStartedTitle">Getting started</h2>
+            <p>
+                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
+                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
+            </p>
+            <p>
+                <a class="btn btn-default" href="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor">Learn more &raquo;</a>
+            </p>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+            <h2 id="librariesTitle">Get more libraries</h2>
+            <p>
+                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
+            </p>
+            <p>
+                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
+            </p>
+        </section>
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+            <h2 id="hostingTitle">Web Hosting</h2>
+            <p>
+                You can easily find a web hosting company that offers the right mix of features and price for your applications.
+            </p>
+            <p>
+                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
+            </p>
+        </section>
+    </div>
+</main>

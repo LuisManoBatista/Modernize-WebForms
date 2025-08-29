@@ -1,60 +1,41 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorWebFormsApp</a>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Application name</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item"><NavLink class="nav-link" href="/" Match="NavLinkMatch.Prefix">Home</NavLink></li>
+                <li class="nav-item"><NavLink class="nav-link" href="/counter" Match="NavLinkMatch.Prefix">Counter</NavLink></li>
+                <li class="nav-item"><NavLink class="nav-link" href="/weather" Match="NavLinkMatch.Prefix">Weather</NavLink></li>
+                <li class="nav-item"><NavLink class="nav-link" href="/about" Match="NavLinkMatch.Prefix">About</NavLink></li>
+                <li class="nav-item"><NavLink class="nav-link" href="/contact" Match="NavLinkMatch.Prefix">Contact</NavLink></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sessions</a>
+                    <ul class="dropdown-menu">
+                        <li><NavLink class="dropdown-item" href="/session">Session (Blazor)</NavLink></li>
+                        <li><NavLink class="dropdown-item" href="/sessionpage">Session (WebForms)</NavLink></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Authentication links using Blazor's built-in authentication -->
+            <AuthorizeView>
+                <Authorized>
+                    <ul class="navbar-nav navbar-right">
+                        <li><NavLink class="nav-link" href="/account/manage" title="Manage your account"> Hello, @context.User.Identity?.Name</NavLink></li>
+                        <li><NavLink class="nav-link" href="/account/logout">Log off</NavLink></li>
+                    </ul>
+                </Authorized>
+                <NotAuthorized>
+                    <ul class="navbar-nav navbar-right">
+                        <li><NavLink class="nav-link" href="/account/register">Register</NavLink></li>
+                        <li><NavLink class="nav-link" href="/account/login">Log in</NavLink></li>
+                    </ul>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
     </div>
-</div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="session">
-                <span class="bi bi-wallet-fill-nav-menu" aria-hidden="true"></span> Blazor Session Sample
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/default" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Legacy Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/about" Match="NavLinkMatch.All">
-                <span class="bi bi-info-square-fill-nav-menu" aria-hidden="true"></span> Legacy About
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/contact" Match="NavLinkMatch.All">
-                <span class="bi bi-person-lines-fill-nav-menu" aria-hidden="true"></span> Legacy Contact
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/sessionpage" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Legacy Session Sample
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+</nav>
