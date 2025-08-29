@@ -1,11 +1,18 @@
 using BlazorWebFormsApp;
 using BlazorWebFormsApp.Components;
 using BlazorWebFormsApp.Components.Components;
+using BlazorWebFormsApp.Providers;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.SystemWebAdapters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();
+
 builder.Services.AddHttpForwarder();
 
 var sharedApplicationName = "SharedCookieWebFormApp";
