@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TypeScriptToolsVersion>5.0</TypeScriptToolsVersion>
+    <!--<TypeScriptToolsVersion>5.0</TypeScriptToolsVersion>-->
   </PropertyGroup>
 
   <ItemGroup>
