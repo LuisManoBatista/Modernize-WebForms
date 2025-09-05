@@ -643,13 +643,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WebMvcApp\SystemWeb.OpenTelemetry.Application\SystemWeb.OpenTelemetry.Application.csproj">
-      <Project>{bd9a5a77-d12f-e96b-cdb6-fe4921bef7cd}</Project>
-      <Name>SystemWeb.OpenTelemetry.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FrameworkUtilities\FrameworkUtilities.csproj">
       <Project>{6623cec3-c3bf-41bf-bc32-f99ae6244263}</Project>
       <Name>FrameworkUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemWeb.OpenTelemetry.Application\SystemWeb.OpenTelemetry.Application.csproj">
+      <Project>{47f48c84-9f8a-25e8-adb7-7a67d2f17f2b}</Project>
+      <Name>SystemWeb.OpenTelemetry.Application</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

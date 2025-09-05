@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFormsApp.AppHost", "WebF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFormsApp.ServiceDefaults", "WebFormsApp.ServiceDefaults\WebFormsApp.ServiceDefaults.csproj", "{72359475-FB46-3EA4-D113-6D1D1215F179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWeb.OpenTelemetry.Application", "..\WebMvcApp\SystemWeb.OpenTelemetry.Application\SystemWeb.OpenTelemetry.Application.csproj", "{BD9A5A77-D12F-E96B-CDB6-FE4921BEF7CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWeb.OpenTelemetry.Application", "SystemWeb.OpenTelemetry.Application\SystemWeb.OpenTelemetry.Application.csproj", "{47F48C84-9F8A-25E8-ADB7-7A67D2F17F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{72359475-FB46-3EA4-D113-6D1D1215F179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72359475-FB46-3EA4-D113-6D1D1215F179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72359475-FB46-3EA4-D113-6D1D1215F179}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD9A5A77-D12F-E96B-CDB6-FE4921BEF7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD9A5A77-D12F-E96B-CDB6-FE4921BEF7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD9A5A77-D12F-E96B-CDB6-FE4921BEF7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD9A5A77-D12F-E96B-CDB6-FE4921BEF7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F48C84-9F8A-25E8-ADB7-7A67D2F17F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F48C84-9F8A-25E8-ADB7-7A67D2F17F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F48C84-9F8A-25E8-ADB7-7A67D2F17F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F48C84-9F8A-25E8-ADB7-7A67D2F17F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
